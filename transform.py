@@ -1,6 +1,8 @@
 import pandas as pd
+import logging
 from extract import extract
 
+log = logging.getLogger(__name__)
 
 def transform(df):
     # Copiando df para nao alterar o original
@@ -12,7 +14,7 @@ def transform(df):
     # Convertendo o saldo para numero
     df["saldo_milhoes_brl"] = pd.to_numeric(df["saldo_milhoes_brl"])
     # Verificando os nulos
-    print(df.isna().sum())
+    log.info(df.isna().sum().sum())
     
     # return df 
 
