@@ -16,9 +16,14 @@ def run():
     df = extract()
     log.info(f"Extraídas {len(df)} linhas")
     # 3. Transformar: o mesmo, registrando as linhas que saíram
+    df = transform(df)
+    log.info(f"Linhas {len(df)} transformadas")
     # 4. Validar: registre "Validação OK" (se falhar, o raise já interrompe)
+    df = validate(df)
+    log.info("Validação OK")
     # 5. Carregar: registre que a tabela foi gravada
-    pass
+    load(df)
+    log.info("Tabela gravada")
 
 
 if __name__ == "__main__":
