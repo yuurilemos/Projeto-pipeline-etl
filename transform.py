@@ -14,7 +14,7 @@ def transform(df):
     # Convertendo o saldo para numero
     df["saldo_milhoes_brl"] = pd.to_numeric(df["saldo_milhoes_brl"])
     # Verificando os nulos
-    log.info(df.isna().sum().sum())
+    log.info(f"Nulos encontrados: {df.isna().sum().sum()}")
     
     # return df 
 

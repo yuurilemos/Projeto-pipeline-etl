@@ -74,10 +74,11 @@ O pipeline para com `ValueError` e mensagem clara antes de gravar no banco se:
 ## Exemplo de log
 
 ```
-2026-10-22 16:53:48,589 INFO Extraídas 234 linhas
-2026-10-22 16:53:48,595 INFO Linhas 234 transformadas
-2026-10-22 16:53:48,595 INFO Validação OK
-2026-10-22 16:53:48,615 INFO Tabela gravada
+2026-10-22 17:23:42,701 INFO Extraídas 234 linhas
+2026-10-22 17:23:42,710 INFO Nulos encontrados: 0
+2026-10-22 17:23:42,710 INFO Linhas 234 transformadas
+2026-10-22 17:23:42,710 INFO Validação OK
+2026-10-22 17:23:42,736 INFO Tabela gravada
 ```
 
 
