@@ -17,7 +17,7 @@ def run():
     log.info(f"Extraídas {len(df)} linhas")
     # 3. Transformar: o mesmo, registrando as linhas que saíram
     df = transform(df)
-    log.info(f"Linhas {len(df)} transformadas")
+    log.info(f"{len(df)} Linhas transformadas")
     # 4. Validar: registre "Validação OK" (se falhar, o raise já interrompe)
     df = validate(df)
     log.info("Validação OK")
