@@ -8,7 +8,7 @@ def transform(df):
     # Copiando df para nao alterar o original
     df = df.copy()
     # Renomeando as colunas
-    df = df.rename(columns = {"data": "data", "valor": "saldo_milhoes_brl"})
+    df = df.rename(columns = {"data": "data", "valor" : "saldo_milhoes_brl"})
     # Convertendo a coluna de data
     df["data"] = pd.to_datetime(df["data"], format = "%d/%m/%Y")
     # Convertendo o saldo para numero

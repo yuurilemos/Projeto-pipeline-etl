@@ -1,6 +1,6 @@
 # Pipeline ETL: Saldo de crédito com recursos livres (pessoas físicas)
 
-Pipeline ETL em Python que extrai dados da API do Banco Central do Brasil, limpa e padroniza, valida e grava em um banco SQLite. Cada etapa é um módulo separado e a execução registra logs com contagem de linhas.
+Pipeline ETL em Python que extrai dados da API do Banco Central do Brasil, limpa e padroniza, valida e grava em um banco SQLite. Cada etapa é um módulo separado, a execução registra logs com contagem de linhas e a transformação e a validação são cobertas por testes automatizados com pytest.
 
 ## Fonte dos dados
 
@@ -26,6 +26,7 @@ API BCB  ->  extract  ->  transform  ->  validate  ->  load  ->  SQLite (pipelin
 | Validar | `validate.py` | Confere se há linhas e se as colunas obrigatórias existem |
 | Carregar | `load.py` | Grava a tabela `saldo_credito_pf` no SQLite via SQLAlchemy |
 | Orquestrar | `pipeline.py` | Executa tudo em ordem e registra o log |
+| Testes | `tests/` | Testes de `transform` e `validate` com pytest |
 
 ## Como instalar
 
@@ -50,6 +51,19 @@ sqlite3 pipeline.db "SELECT COUNT(*) FROM saldo_credito_pf;"
 ```
 
 Cada etapa também pode ser executada isoladamente (por exemplo, `python extract.py` imprime o formato e as primeiras linhas dos dados brutos).
+
+## Testes
+
+```bash
+pytest
+```
+
+São 8 testes, que não acessam a API nem o banco: usam DataFrames pequenos criados no próprio teste.
+
+- **Transformação (`tests/test_transform.py`):** renomeia a coluna `valor` para `saldo_milhoes_brl`, converte `data` para datetime, converte o saldo para inteiro e não altera o DataFrame original.
+- **Validação (`tests/test_validate.py`):** aceita um DataFrame válido e o devolve, e levanta `ValueError` para DataFrame vazio, para coluna ausente e com mensagem que cita a coluna que faltou.
+
+Os testes foram conferidos quebrando o código de propósito (alterando o nome da coluna no `transform`): os testes correspondentes falharam, e voltaram a passar ao restaurar a linha. A configuração do pytest está em `pytest.ini`.
 
 ## Regras de transformação
 
@@ -86,9 +100,8 @@ O pipeline para com `ValueError` e mensagem clara antes de gravar no banco se:
 
 - Tentar a chamada à API novamente em caso de timeout (retry com espera entre tentativas).
 - Carga incremental com `append`, gravando só as datas novas.
-- Testes automatizados para as etapas de transformação e validação.
 - Gravar o log também em arquivo.
 
 ## Tecnologias
 
-Python, pandas, requests, SQLAlchemy, SQLite.
+Python, pandas, requests, SQLAlchemy, SQLite, pytest.
